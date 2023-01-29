@@ -1,41 +1,46 @@
-const readall = () => {
-    return fetch('/.netlify/functions/readall').then((response) => {
-        return response.json();
+import GetNoteId from './util/GetNoteId';
+
+const readall = async () => {
+    let response = await fetch('/.netlify/functions/readall');
+    let data = await response.json();
+    let notes = [];
+    data.map((note) => {
+        const key = GetNoteId(note);
+        notes.push({
+            note: note.data.note,
+            date: note.data.date,
+            id: key,
+        });
+        return notes;
     });
+    return notes;
 };
 
-const create = (data) => {
-    return fetch('/.netlify/functions/create', {
+const create = async (data) => {
+    let response = await fetch('/.netlify/functions/create', {
+        method: 'POST',
         body: JSON.stringify(data),
-        method: 'POST',
-    }).then((response) => {
-        return response.json();
     });
+    const res = await response.json();
+    let id = GetNoteId(res);
+    return id;
 };
 
-const erase = (id) => {
-    return fetch('/.netlify/functions/erase', {
-        method: 'POST',
+const erase = async (id) => {
+    const response = await fetch('/.netlify/functions/erase', {
+        method: 'DELETE',
         body: JSON.stringify(id),
-    }).then((response) => {
-        return response.json();
     });
+    return await response.json();
 };
 
-const edit = (id, data) => {
-    return fetch(`/.netlify/functions/edit/${id}`, {
-        method: 'POST',
+const edit = async (id, data) => {
+    const response = await fetch(`/.netlify/functions/edit/${ id }`, {
+        method: 'PUT',
         body: JSON.stringify(data),
-    }).then((response) => {
-        return response.json();
     });
+    return await response.json();
 };
 
-const api = {
-    create,
-    readall,
-    erase,
-    edit,
-};
 
-export default api;
+export { readall, edit, create, erase };

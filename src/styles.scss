@@ -4,18 +4,17 @@
     box-sizing: border-box;
 }
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-        'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    background-color: lightGrey;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
-
+.container {
+    margin-top: 20px;
+}
 //wraps the notes-list
 .wrapper {
     width: 95vw;
@@ -121,6 +120,13 @@ textarea {
     .saved {
         font-size: 31px;
     }
+}
+.error-message {
+    font-size: 19px;
+    line-height: 19px;
+    width: 100%;
+    text-align: center;
+    height: 21px;
 }
 
 //holdes the date and icons

@@ -1,7 +1,7 @@
 const faunadb = require('faunadb');
 const q = faunadb.query;
 
-exports.handler = (event, context) => {
+exports.handler = async (event, context) => {
     const client = new faunadb.Client({
         secret: process.env.FAUNADB_SECRET,
         domain: 'db.us.fauna.com',
@@ -9,23 +9,20 @@ exports.handler = (event, context) => {
         scheme: 'https',
     });
 
-    console.log('Get all notes function invoked')
+    console.log('Get all notes function invoked');
 
     return client
         .query(q.Paginate(q.Match(q.Ref('indexes/all_notes'))))
-        .then((response) => {
+        .then(async (response) => {
             const notesRefs = response.data;
-         
             const getQuery = notesRefs.map((ref) => {
                 return q.Get(ref);
             });
-
-            return client.query(getQuery).then((ret) => {
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify(ret),
-                };
-            });
+            const ret = await client.query(getQuery);
+            return {
+                statusCode: 200,
+                body: JSON.stringify(ret),
+            };
         })
         .catch((error) => {
             console.log('error', error);
@@ -34,4 +31,5 @@ exports.handler = (event, context) => {
                 body: JSON.stringify(error),
             };
         });
+
 };

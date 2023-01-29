@@ -1,20 +1,22 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { create } from '../api';
+import { NoteContext } from '../store/note-context';
 
-const AddNote = ({ addNote, setLoading }) => {
+const AddNote = ({ setLoading }) => {
+    const noteCtx = useContext(NoteContext);
     const [noteText, setNoteText] = useState('');
     const count = 200;
 
     const handleChange = (e) => {
         const value = e.target.value;
-        //prevent count from going negative
         if (count - value.length >= 0) {
             setNoteText(value);
         }
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //verify the note isn't empty or just whitespace, then do the things
         setLoading(true);
+
         if (noteText.trim().length > 0) {
             let date = new Date();
             let note = {
@@ -24,6 +26,12 @@ const AddNote = ({ addNote, setLoading }) => {
             addNote(note);
             setNoteText('');
         }
+    };
+
+    const addNote = async (note) => {
+        const id = await create(note);
+        noteCtx.addNote({ ...note, id: id });
+        setLoading(false);
     };
 
     return (

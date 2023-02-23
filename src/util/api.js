@@ -1,4 +1,4 @@
-import GetNoteId from './util/GetNoteId';
+import GetNoteId from './GetNoteId';
 
 const readall = async () => {
     let response = await fetch('/.netlify/functions/readall');

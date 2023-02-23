@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
-import { create } from '../api';
+
 import { NoteContext } from '../store/note-context';
+import { create } from '../util/api';
 
 const AddNote = ({ setLoading }) => {
     const noteCtx = useContext(NoteContext);

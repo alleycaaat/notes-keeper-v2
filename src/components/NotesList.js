@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from 'react';
 
 import { NoteContext } from '../store/note-context';
-import { readall } from '../api';
+import { readall } from '../util/api'
 
 import Note from './Note';
 import AddNote from './AddNote';
@@ -36,7 +36,7 @@ const NotesList = ({ setLoading }) => {
                     </div>
                 ))}
             </div>
-            <div className='error-message'>{error}            </div>
+            <div className='error-message'>{error}</div>
             <AddNote setError={setError} setLoading={setLoading} />
         </div>
     );

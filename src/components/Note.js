@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { MdDeleteForever } from 'react-icons/md';
 import { MdOutlineSave } from 'react-icons/md';
@@ -6,7 +6,7 @@ import { GoPencil } from 'react-icons/go';
 import { MdCancel } from 'react-icons/md';
 
 import { NoteContext } from '../store/note-context';
-import { edit, erase } from '../api';
+import { edit, erase } from '../util/api';
 
 const Note = ({ id, notetext, date, setLoading, setError }) => {
     const noteCtx = useContext(NoteContext);
